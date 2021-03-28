@@ -56,7 +56,7 @@
 
 							echo("
 									<a href='#' class='photo-upload-plus' title='Fotoğraf Yükle'><button class='btn btn-sm btn-success'><i class='fas fa-plus'></i></button></a>
-									<img src='users/".$profili_goster["profil_photo"]."'>
+									<img src='".$profili_goster["profil_photo"]."'>
 									<p>".$profili_goster["username"]."</p>
 									<a href='#' id='profil-buton' title='Profil Ayarları'><button><i class='fas fa-wrench'></i></button></a>
 								");
@@ -231,7 +231,7 @@
 														while($get_users_results = $get_users->fetch()){
 															echo("
 																	<li>
-																	<img src='users/".$get_users_results["profil_photo"]."'>
+																	<img src='".$get_users_results["profil_photo"]."'>
 																	<br>
 																	<br>
 																	<p>

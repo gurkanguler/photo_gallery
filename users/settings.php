@@ -55,7 +55,7 @@
 
 							echo("
 									<a href='#' class='photo-upload-plus' title='Fotoğraf Yükle'><button class='btn btn-sm btn-success'><i class='fas fa-plus'></i></button></a>
-									<img src='".$profili_goster["profil_photo"]."'>
+									<img src='../".$profili_goster["profil_photo"]."'>
 									<p>".$profili_goster["username"]."</p>
 									<a href='#' id='profil-buton' title='Profil Ayarları'><button><i class='fas fa-wrench'></i></button></a>
 								");
@@ -164,17 +164,17 @@
 
 										   $get_username = $_SESSION["username"];
 
-										   $get_profil_photo_settings = $db->query("SELECT DISTINCT * FROM users WHERE username = '".$get_username."' ");
+										   $get_profil_photo_settings = $db->query("SELECT DISTINCT username, profil_photo FROM users WHERE username = '".$get_username."' ");
 
 										   while($get_profil_photo_settings_result = $get_profil_photo_settings->fetch()){
-										   	echo("<img src='".$get_profil_photo_settings_result["profil_photo"]."' class='rounded'> ");
+										   	echo("<img src='../".$get_profil_photo_settings_result["profil_photo"]."' class='rounded'> ");
 										   }
 
 										?>
 										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'hesap_ayarlari')" class="settings_menu_btns">Hesap Ayarları</button></li>
 										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'takip-ettiklerim')" class="settings_menu_btns">Takip Ettiklerim</button></li>
-										<li class="list-group-item"><button class="settings_menu_btns">Takipçiler</button></li>
-										<li class="list-group-item"><button class="settings_menu_btns">Hesabımı Sil</button></li>
+										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'takipciler')" class="settings_menu_btns">Takipçiler</button></li>
+										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'account-my-delete')" class="settings_menu_btns">Hesabımı Sil</button></li>
 									</ul>
 								</div>
 							</div>
@@ -369,7 +369,7 @@
 										</div>
 									<!-- hesap_ayarlari -->
 
-									<!-- takipciler -->
+									<!-- takip-ettiklerim -->
 										<div id="takip-ettiklerim" class="profil-ayarlari-content">
 											
 											<div class="col-sm-12">
@@ -377,7 +377,7 @@
 												<div class="card">
 													<header style="user-select: none; font-weight:bold;" class="card-header bg-dark text-white font-weight-bold">Takip Ettiklerim&nbsp;<?php 
 
-														$get_followers = $db->query("SELECT followers FROM users WHERE username='".$session_username."'");
+														$get_followers = $db->query("SELECT DISTINCT username, profil_photo,following FROM users WHERE following !='".$session_username."'");
 
 														if($get_followers_result = $get_followers->rowCount()){
 															if($get_followers_result > 0){
@@ -388,18 +388,18 @@
 
 													<div class="card-body" style="user-select: none;">
 														<table>
-															<tr>
+															
 																<?php 
 
-																	$get_followers_name = $db->query("SELECT * FROM users WHERE followers='".$session_username."'");
+																	$get_followers_name = $db->query("SELECT DISTINCT username, profil_photo,following FROM users WHERE following !='".$session_username."'");
 
 																	while($get_followers_name_result = $get_followers_name->fetch()){
-																		echo("<td>
-																				<img src='".$get_followers_name_result["profil_photo"]."' style='width:70px; height:70px; border-radius:100%;'>
-																			</td><td>".$get_followers_name_result["followers"]."</td>");
+																		echo("<tr><td style='padding:20px;'>
+																				<img src='../".$get_followers_name_result["profil_photo"]."' style='width:50px; height:50px; border-radius:100%;'>
+																			</td><td><p style='position:relative; top:10px;left:10px;'>".$get_followers_name_result["following"]."</p></td></tr>");
 																	}
 																?>
-															</tr>
+															
 														</table>
 													</div>
 												</div>
@@ -407,9 +407,99 @@
 											</div>
 
 										</div>
+									<!-- takip-ettiklerim -->
+
 									<!-- takipciler -->
+										<div class="profil-ayarlari-content" id="takipciler">
+											<div class="col-sm-12">
+												
+												<div class="card">
+													<header style="user-select: none; font-weight:bold;" class="card-header bg-dark text-white font-weight-bold">Takipçiler&nbsp;<?php 
+
+														$get_followers = $db->query("SELECT DISTINCT following FROM users WHERE following != '".$session_username."' ");
+
+														if($get_followers_result = $get_followers->rowCount()){
+															if($get_followers_result > 0){
+																echo $get_followers_result;
+															}
+														}
+													?></header>
+
+													<div class="card-body" style="user-select: none;">
+														<table>
+															
+																<?php 
+
+																	$get_followers_name = $db->query("SELECT DISTINCT username, profil_photo, following FROM users WHERE following != '".$session_username."' ");
+
+																	while($get_followers_name_result = $get_followers_name->fetch()){
+
+																		echo("
+																			<tr><td style='padding:20px;'>
+																				<img src='../".$get_followers_name_result["profil_photo"]."' style='width:50px; height:50px; border-radius:100%;'>
+																			</td><td><p style='position:relative; top:10px;left:10px;'>".$get_followers_name_result["following"]."</p></td></tr>
+																			
+																			");
+																	}
+																?>
+															
+														</table>
+													</div>
+												</div>
+										</div>
+
+									<!-- takipciler -->
+
+
+
+								
+
 								</div>
 							<!-- profil-ayarlari-content -->
+
+
+							<!-- delete-my-account -->
+								<div class="profil-ayarlari-content" id="account-my-delete">
+											
+									<div class="col-sm-12">
+											
+										<div class="card">
+													
+											<div class="card-header bg-danger text-white" style="user-select: none; font-weight: bold;">Hesabımı Sil</div>
+
+											<div class="card-body" style="user-select: none">
+												<?php 
+													echo "<b>";
+													echo $session_username;
+													echo "</b>";
+													echo ", kullanıcı adlı hesabı silmek istiyor musunuz ?";
+													echo "<br><br>";
+													echo("<form method='post'>
+															<button class='btn btn-sm btn-success' name='delete-confirm'>Evet</button>
+															<button class='btn btn-sm btn-danger'>Hayır</button>
+														</form>");
+												?>
+												<?php 
+													if(isset($_POST["delete-confirm"])){
+
+														include 'db/db.php';
+
+														$delete = $db->query("DELETE FROM users WHERE username = '".$session_username."' ");
+
+														if($delete){
+															echo("<script>swal('Hesap Silindi','Lütfen Bekleyiniz.','success')</script>");
+															header("Refresh:1; url=../index.php");
+														}
+													}
+												?>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+							<!-- delete-my-account -->
 
 						</div>
 					<!-- col -->
@@ -430,7 +520,10 @@
 
 			let sayfalar = document.querySelectorAll('.profil-ayarlari-content');
 
+		
+
 			for(let i = 0; i < sayfalar.length; i++){
+				
 				sayfalar[i].style.display = 'none';
 			}
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2021 at 06:47 AM
+-- Generation Time: Mar 28, 2021 at 08:37 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -41,10 +41,7 @@ CREATE TABLE `photos` (
 --
 
 INSERT INTO `photos` (`id`, `username`, `photos`, `date`, `begeni_sayisi`, `begenenler`) VALUES
-(1, 'test', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-27 23:43:56', 31, NULL),
-(2, 'test', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-27 23:44:50', 31, NULL),
-(3, 'test2', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-27 23:45:48', 31, NULL),
-(4, 'test', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-28 03:23:13', NULL, NULL);
+(5, 'test4', 0x75736572732f55706c6f6164732f616e6f6e796d6f75732e6a7067, '2021-03-28 09:03:48', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -83,8 +80,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `username`, `password`, `profil_photo`, `birthday`, `photos`, `followers`, `following`) VALUES
-(1, 'test', 'test', 'test@gmail.com', 'test4', 'c06db68e819be6ec3d26c6038d8e8d1f', 0x55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-10 00:00:00', NULL, NULL, NULL),
-(9, 'test2', 'test2', 'test2@gmail.com', 'test', 'cc03e747a6afbbcbf8be7668acfebee5', 0x55706c6f6164732f6861636b65722e6a7067, '2021-03-03 00:00:00', '', 'test4', NULL);
+(18, 'test', 'test', 'test@gmail.com', 'test', 'cc03e747a6afbbcbf8be7668acfebee5', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-01 00:00:00', NULL, NULL, NULL),
+(21, 'test3', 'test3', 'test3@gmail.com', 'test3', 'd18a4ce47e0f5fa8d7a75ec8bc2cf8c9', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-10 00:00:00', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -116,7 +113,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `takipci`
@@ -128,7 +125,7 @@ ALTER TABLE `takipci`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
