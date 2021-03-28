@@ -55,7 +55,7 @@
 
 							echo("
 									<a href='#' class='photo-upload-plus' title='Fotoğraf Yükle'><button class='btn btn-sm btn-success'><i class='fas fa-plus'></i></button></a>
-									<img src='../".$profili_goster["profil_photo"]."'>
+									<img src='".$profili_goster["profil_photo"]."'>
 									<p>".$profili_goster["username"]."</p>
 									<a href='#' id='profil-buton' title='Profil Ayarları'><button><i class='fas fa-wrench'></i></button></a>
 								");
@@ -164,16 +164,16 @@
 
 										   $get_username = $_SESSION["username"];
 
-										   $get_profil_photo_settings = $db->query("SELECT * FROM users WHERE username = '".$get_username."' ");
+										   $get_profil_photo_settings = $db->query("SELECT DISTINCT * FROM users WHERE username = '".$get_username."' ");
 
 										   while($get_profil_photo_settings_result = $get_profil_photo_settings->fetch()){
-										   	echo("<img src='../".$get_profil_photo_settings_result["profil_photo"]."' class='rounded'> ");
+										   	echo("<img src='".$get_profil_photo_settings_result["profil_photo"]."' class='rounded'> ");
 										   }
 
 										?>
 										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'hesap_ayarlari')" class="settings_menu_btns">Hesap Ayarları</button></li>
-										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'takipciler')" class="settings_menu_btns">Takipçiler</button></li>
-										<li class="list-group-item"><button class="settings_menu_btns">Takip Ettiklerim</button></li>
+										<li class="list-group-item"><button onclick="profil_ayarlari_page(event,'takip-ettiklerim')" class="settings_menu_btns">Takip Ettiklerim</button></li>
+										<li class="list-group-item"><button class="settings_menu_btns">Takipçiler</button></li>
 										<li class="list-group-item"><button class="settings_menu_btns">Hesabımı Sil</button></li>
 									</ul>
 								</div>
@@ -244,7 +244,7 @@
 																		<br>
 																		<br>
 																		<button class='btn btn-outline-success' name='update-btn'>Güncelle</button>
-																		
+																
 
 																	</form>
 																</div>
@@ -252,12 +252,161 @@
 														");
 
 												}
+
+												if(isset($_POST["update-btn"])){
+
+													$username = $_POST["username"];
+													$email = $_POST["email"];
+													$password = $_POST["password"];
+													$new_password = $_POST["new_password"];
+													$new_password_rep = $_POST["new_password_rep"];
+
+													$path = "Uploads/";
+
+													$photo = $path.basename($_FILES["photo"]["name"]);
+
+													$photo_type = $_FILES["photo"]["type"];
+
+													$id = $_GET["id"];
+
+													if(!empty($username)){
+
+														$update = $db->query("SELECT * FROM users WHERE username = '".$session_username."' ");
+
+														if($update_result = $update->rowCount()){
+
+															$update_query = $db->query("UPDATE users SET username='".$username."' WHERE username='".$session_username."' ");
+
+
+
+															if($update_query){
+																echo("<script>swal('Güncelleme Başarılı','Lütfen Bekleyiniz','success')</script>");
+																$_SESSION["username"] = $username;
+																header("Refresh:1; url=settings.php?id=".$id."");
+
+															}
+														}
+													}
+
+													if(!empty($email)){
+
+														$update = $db->query("SELECT * FROM users WHERE username = '".$session_username."' ");
+
+														if($update_result = $update->rowCount()){
+
+															$update_query = $db->query("UPDATE users SET email='".$email."' WHERE username='".$session_username."'");
+
+															if($update_query){
+																echo("<script>swal('Güncelleme Başarılı','Lütfen Bekleyiniz','success')</script>");
+																
+																header("Refresh:1; url=settings.php?id=".$id."");
+															}
+														}
+													}
+													if(!empty($password)){
+
+														$password_md = md5($password);
+
+														$password_check = $db->query("SELECT * FROM users WHERE username='".$session_username."' AND password = '".$password_md."' ");
+
+														if($password_check_res = $password_check->rowCount()){
+
+															if($password_check_res > 0){
+
+																if(empty($new_password) || empty($new_password_rep)){
+																	echo("<script>swal('Hata','Yeni Parolanızı Boş Bırakmayınız','error')</script>");
+																}
+																else{
+																	if(strlen($new_password) < 8 || strlen($new_password) > 16){
+																			echo("<script>swal('Hata','Lütfen en az 8, en fazla 16 karakterli yeni parolanızı giriniz.','error')</script>");
+																	}
+																	if(strlen($new_password_rep) < 8 || strlen($new_password_rep) > 16){
+																		echo("<script>swal('Hata','Lütfen en az 8, en fazla 16 karakterli yeni parolanızın tekrarını giriniz.','error')</script>");
+																	}
+																	else{
+
+																		$new_password_md = md5($new_password);
+																		$update_password = $db->query("UPDATE users SET password = '".$new_password_md."' WHERE username = '".$session_username."' ");
+
+																		if($update_password){
+																			echo("<script>swal('Güncelleme Başarılı','Lütfen Bekleyiniz','success')</script>");
+																			
+																			header("Refresh:1; url=settings.php?id=".$id."");
+																		}
+																	}
+																}
+															}
+														}
+														else{
+															echo("<script>swal('Hata','Mevcut Parolanız Hatalı','error')</script>");
+														}
+													}
+
+													if($photo_type == "image/jpg" || $photo_type == "image/jpeg" || $photo_type == "image/png"){
+
+														$username_Check = $db->query("SELECT * FROM users WHERE username='".$session_username."'");
+
+														if($username_Check_res = $username_Check->rowCount()){
+
+															if($username_Check_res > 0){
+
+																if(move_uploaded_file($_FILES["photo"]["tmp_name"], $photo)){
+
+																	$photo_update = $db->query("UPDATE users SET profil_photo='".$photo."' WHERE username = '".$session_username."' ");
+
+																	if($photo_update){
+																			echo("<script>swal('Güncelleme Başarılı','Lütfen Bekleyiniz','success')</script>");
+																			
+																			header("Refresh:1; url=settings.php?id=".$id."");
+																	}
+																}
+															}
+														}
+													}
+
+												}
 											?>
 										</div>
 									<!-- hesap_ayarlari -->
 
 									<!-- takipciler -->
-										<div id="takipciler" class="profil-ayarlari-content">takipçidsler</div>
+										<div id="takip-ettiklerim" class="profil-ayarlari-content">
+											
+											<div class="col-sm-12">
+												
+												<div class="card">
+													<header style="user-select: none; font-weight:bold;" class="card-header bg-dark text-white font-weight-bold">Takip Ettiklerim&nbsp;<?php 
+
+														$get_followers = $db->query("SELECT followers FROM users WHERE username='".$session_username."'");
+
+														if($get_followers_result = $get_followers->rowCount()){
+															if($get_followers_result > 0){
+																echo $get_followers_result;
+															}
+														}
+													?></header>
+
+													<div class="card-body" style="user-select: none;">
+														<table>
+															<tr>
+																<?php 
+
+																	$get_followers_name = $db->query("SELECT * FROM users WHERE followers='".$session_username."'");
+
+																	while($get_followers_name_result = $get_followers_name->fetch()){
+																		echo("<td>
+																				<img src='".$get_followers_name_result["profil_photo"]."' style='width:70px; height:70px; border-radius:100%;'>
+																			</td><td>".$get_followers_name_result["followers"]."</td>");
+																	}
+																?>
+															</tr>
+														</table>
+													</div>
+												</div>
+
+											</div>
+
+										</div>
 									<!-- takipciler -->
 								</div>
 							<!-- profil-ayarlari-content -->

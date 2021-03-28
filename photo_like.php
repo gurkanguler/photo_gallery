@@ -9,21 +9,23 @@
 
 		$get_photo_id = $_GET["id"];
 
-		$like_query = $db->query("SELECT * FROM photos WHERE photos='".$get_photo_id."' ");
+		$like_query = $db->query("SELECT * FROM photos WHERE id='".$get_photo_id."' ");
          
 		$like_number = 1;
+
+		$my_username = $_SESSION["username"];
 
 		while($like_query_result = $like_query->fetch()){
 
 			$get_like_count = $like_query_result["begeni_sayisi"];
 
-			$sum_like = $get_like_count + $like_number;
 			
-			$like = $db->query("UPDATE photos SET begeni_sayisi='".$sum_like."' WHERE photos='".$get_photo_id."'");
 
 		}
-
-		$my_username = $_SESSION["username"];
+		$sum_like = $get_like_count + $like_number;
+			
+			$like = $db->query("UPDATE photos SET begeni_sayisi='".$sum_like."' WHERE id='".$get_photo_id."'");
+	
 
 		$my_id = $db->query("SELECT * FROM users WHERE username='".$my_username."'");
 

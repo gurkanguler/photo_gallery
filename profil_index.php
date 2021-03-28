@@ -56,7 +56,7 @@
 
 							echo("
 									<a href='#' class='photo-upload-plus' title='Fotoğraf Yükle'><button class='btn btn-sm btn-success'><i class='fas fa-plus'></i></button></a>
-									<img src='".$profili_goster["profil_photo"]."'>
+									<img src='users/".$profili_goster["profil_photo"]."'>
 									<p>".$profili_goster["username"]."</p>
 									<a href='#' id='profil-buton' title='Profil Ayarları'><button><i class='fas fa-wrench'></i></button></a>
 								");
@@ -189,7 +189,7 @@
 							<div class="card">
 								<?php 
 									include 'db/db.php';
-									$get_posts = $db->query("SELECT * FROM photos");
+									$get_posts = $db->query("SELECT DISTINCT id,username, photos,date ,begeni_sayisi FROM photos");
 									while($post_result = $get_posts->fetch()){
 										echo("
 												<div class='card-body'>
@@ -197,7 +197,7 @@
 													<img src='".$post_result["photos"]."'>
 													<br>
 													<br>
-													<a href='photo_like.php?id=".$post_result["photos"]."' class='like-btn'><i class='fas fa-heart'></i></a>&nbsp;".$post_result["begeni_sayisi"]."
+													<a href='photo_like.php?id=".$post_result["id"]."' class='like-btn'><i class='fas fa-heart'></i></a>&nbsp;".$post_result["begeni_sayisi"]."
 												</div>
 												<hr>
 											");
@@ -226,12 +226,12 @@
 													<ul>
 													<?php 
 														$user_name2 = $_SESSION["username"];
-														$get_users = $db->query("SELECT DISTINCT * FROM users WHERE username!='".$user_name2."'");
+														$get_users = $db->query("SELECT DISTINCT username, profil_photo FROM users WHERE username!='".$user_name2."'");
 
 														while($get_users_results = $get_users->fetch()){
 															echo("
 																	<li>
-																	<img src='".$get_users_results["profil_photo"]."'>
+																	<img src='users/".$get_users_results["profil_photo"]."'>
 																	<br>
 																	<br>
 																	<p>
