@@ -1,0 +1,285 @@
+.login-form{
+	width: 60%;
+	height: 400px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	border-radius: 6px;
+}
+.login-background{
+	width: 50%;
+	height: 400px;
+	float: left;
+	position: relative;
+}
+
+.login-background .login-shadow{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.6);
+	position: absolute;
+	z-index: 2222;
+}
+.login-background img{
+	width: 100%;
+	height: 100%;
+	z-index: 1111;
+	position: absolute;
+}
+.login-form-container{
+	width: 50%;
+	height: 400px;
+	float: right;
+	position: relative;
+}
+.login-card{
+	border: 0;
+}
+.login-form-header{
+	background: #000;
+	color: #fff;
+	text-align: center;
+	font-family: 'Merriweather', serif;
+	user-select: none;
+	font-weight: bold;
+}
+
+.login-links a{
+	text-decoration: none;
+	color: #000;
+	font-size: 14px;
+	user-select: none;
+	transition: .3s ease;
+}
+
+.login-links a:hover{
+	color: #616161;
+}
+
+.kayit-ol-page{
+	width: 50%;
+	height: 50%;
+	position: absolute;
+	top:50%;
+	left: 50%;
+	transform: translate(-50%, -80%);
+}
+
+.kayit-ol-header{
+	background: #000;
+	color: #fff;
+	user-select: none;
+	font-family: 'Merriweather', serif;
+	font-weight: bold;
+}
+
+.index-navbar{
+	width: 100%;
+	height: 50px;
+	box-shadow: 3px 3px 4px #000;
+	padding: 10px;
+	position: fixed;
+	background: #fff;
+	z-index: 3333;
+}
+.index-navbar .logo{
+	width: 200px;
+	height: 30px;
+	float: left;
+}
+.index-navbar .logo a{
+	color: #000;
+	text-decoration: none;
+	user-select: none;
+	position: relative;
+	top: 5px;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 18px;
+}
+.index-navbar .menus{
+	width: 500px;
+	height: 30px;
+	float: left;
+	position: relative;
+	user-select: none;
+	top: 1px;
+	text-align: center;
+}
+
+.index-navbar .menus ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.index-navbar .menus ul li{
+	display: inline-block;
+	padding: 3px;
+	margin: 3px;
+}
+.index-navbar .menus ul li a{
+	font-family: 'IBM Plex Sans', sans-serif;
+	color: #000;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	font-size: 15px;
+}
+.index-navbar .menus ul li a:hover{
+	color:#bf0000;
+}
+
+.index-navbar .menus ul li a.active-menu{
+	color: #bf0000;
+}
+
+.profil-menu{
+	width: 160px;
+	height: 40px;
+	float: right;
+	position: relative;
+	text-align: right;
+}
+.profil-menu .photo-upload-plus{
+	float: left;
+	color: #000;
+	position: relative;
+	top: 6px;
+	right: 10px;
+}
+.profil-menu .photo-upload-plus button{
+	width: 20px;
+	height: 20px;
+	font-size: 13px;
+}
+.profil-menu .photo-upload-plus button i{
+	position: relative;
+	top: -4px;
+	left: -4px;
+}
+.profil-menu img{
+	width: 35px;
+	height: 35px;
+	border: 0;
+	float: left;
+	border-radius: 100%;
+	position: relative;
+	
+}
+
+.profil-menu p{
+	float: left;
+	position: relative;
+	top: 7px;
+	left: 10px;
+	user-select: none;
+	font-weight: bold;
+	font-size: 15px;
+}
+.profil-menu #profil-buton button{
+	float: left;
+	width: 30px;
+	height: 30px;
+	position: relative;
+	border: 0;
+	left: 14px;
+	outline: none;
+	top: 4px;
+	transition: all 0.3s ease;
+	color: red;
+	background: transparent;
+}
+.profil-menu #profil-buton button:hover{
+	color: darkred;
+	cursor: pointer
+}
+
+.profil-menu-submenu{
+	position: absolute;
+	background: #fff;
+	right: 71px;
+	top: 50px;
+	padding: 6px;
+	text-align: center;
+	user-select: none;
+	display: none;
+}
+.profil-menu-submenu ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.profil-menu-submenu ul li{
+	display: block;
+	margin: 4px;
+	padding: 3px;
+	border-bottom: 1pt solid #bfbfbf;
+}
+.profil-menu-submenu ul li a{
+	text-decoration: none;
+	color: #000;
+	transition: all 0.2s ease;
+}
+.profil-menu-submenu ul li a:hover{
+	color: #bf0000;
+}
+
+.photo-upload-content{
+	position: absolute;
+	background: #fff;
+	border-radius: 7px;
+	border: 1pt solid #000;
+	right: 175px;
+	top: 40px;
+	padding: 10px;
+	display: none;
+	user-select: none;
+}
+.photo-upload-content header{
+	text-align: center;
+}
+.photo-upload-content #photo-upload-content-close{
+	float: right;
+	position: relative;
+	top: -35px;
+	right: 10px;
+	transition: all 0.2s ease;
+}
+.photo-upload-content #photo-upload-content-close:hover{
+	color: #bf0000;
+	cursor: pointer;
+}
+#user-content{
+	width: 100%;
+	position: relative;
+	top: 55px;
+}
+.taniyor-olabilecegin ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.taniyor-olabilecegin ul li{
+	display: block;
+	border-bottom: 1pt solid #000;
+}
+.taniyor-olabilecegin ul li img{
+	width: 65px;
+	height: 65px;
+	border-radius: 100%;
+}
+#posts{
+	user-select: none;
+}
+#posts img{
+	width:100%;
+	height: 200px;
+}
+.like-btn{
+	color: red;
+	transition: .4s ease;
+}
+.like-btn:hover{
+	color: darkred;
+}
