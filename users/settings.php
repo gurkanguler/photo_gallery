@@ -4,6 +4,7 @@
 	ob_start();
 
 	if(isset($_SESSION["username"])){
+		$id = $_GET["id"];
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,9 @@
 			
 			<!-- logo -->
 				<div class="logo">
-					<a href="../profil_index.php" title="Fotoğraf Galerisi">Fotoğraf Galerisi</a>
+					<?php 
+						echo("<a href='../profil_index.php?id=".$id."' title='Fotoğraf Galerisi'>Fotoğraf Galerisi</a>");
+					?>
 				</div>
 			<!-- logo -->
 
@@ -135,8 +138,9 @@
 					<ul>
 						<?php 
 							echo("
-									<li><a href='settings.php?id=".$user_id."'>Profil Ayarları</a></li>
-									<li><a href='../logout.php'>Oturumu Kapat</a></li>
+									<li><a href='settings.php?id=".$user_id."'>Profil Ayarları&nbsp;<i class='fas fa-wrench'></i></a></li>
+									<li><a href='../messages.php?id=".$user_id."'>Mesajlar</a>&nbsp;<i class='fas fa-inbox'></i></li>
+									<li><a href='../logout.php'>Oturumu Kapat&nbsp;<i class='fas fa-sign-out-alt'></i></a></li>
 								");
 						?>
 					</ul>

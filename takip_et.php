@@ -17,6 +17,7 @@
 
 		$get_my_account_inf = $db->query("SELECT * FROM users WHERE username='".$username."'");
 
+
 		$check_following = $db->query("SELECT following FROM users WHERE following = '".$user_get."' ");
 
 		if($check_following_result = $check_following->rowCount()){
@@ -35,6 +36,8 @@
 				array_push($user_arry, $result_my_account["name"],$result_my_account["surname"], $result_my_account["email"], $result_my_account["username"], $result_my_account["password"], $result_my_account["profil_photo"],$result_my_account["birthday"],$result_my_account["photos"],$result_my_account["followers"]);
 
 					$add_follower = $db->query("INSERT INTO users(name,surname,email,username,password,profil_photo,birthday,photos,followers,following) VALUES('".$result_my_account["name"]."','".$result_my_account["surname"]."','".$result_my_account["email"]."','".$result_my_account["username"]."','".$result_my_account["password"]."','".$result_my_account["profil_photo"]."','".$result_my_account["birthday"]."','".$result_my_account["photos"]."','".$username."','".$user_get."')");
+
+					header("Refresh:1; url=profil_index.php?id=".$result_my_account["id"]."");
 
 				
 			}

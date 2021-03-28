@@ -300,3 +300,16 @@
 .profil-ayarlari-content{
 	display: none;
 }
+
+.send-message{
+	background: transparent;
+	border: 0;
+	outline: none;
+	transition: all 0.3s ease;
+}
+.send-message:hover{
+	color: #bf0000;
+}
+.message-tab{
+	display: none;
+}

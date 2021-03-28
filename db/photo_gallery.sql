@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2021 at 08:37 AM
+-- Generation Time: Mar 28, 2021 at 10:22 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `photo_gallery`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `gonderen` text COLLATE utf8_turkish_ci NOT NULL,
+  `mesaj` text COLLATE utf8_turkish_ci NOT NULL,
+  `alan` text COLLATE utf8_turkish_ci NOT NULL,
+  `tarih` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `gonderen`, `mesaj`, `alan`, `tarih`) VALUES
+(1, 'test', 'testsdasd', 'test5', '2021-03-28 11:16:05'),
+(2, 'test', 'test2dasds', 'test5', '2021-03-28 11:17:42');
 
 -- --------------------------------------------------------
 
@@ -41,7 +63,8 @@ CREATE TABLE `photos` (
 --
 
 INSERT INTO `photos` (`id`, `username`, `photos`, `date`, `begeni_sayisi`, `begenenler`) VALUES
-(5, 'test4', 0x75736572732f55706c6f6164732f616e6f6e796d6f75732e6a7067, '2021-03-28 09:03:48', 1, NULL);
+(5, 'test4', 0x75736572732f55706c6f6164732f616e6f6e796d6f75732e6a7067, '2021-03-28 09:03:48', 1, NULL),
+(6, 'test5', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-28 09:40:33', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -81,11 +104,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `username`, `password`, `profil_photo`, `birthday`, `photos`, `followers`, `following`) VALUES
 (18, 'test', 'test', 'test@gmail.com', 'test', 'cc03e747a6afbbcbf8be7668acfebee5', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-01 00:00:00', NULL, NULL, NULL),
-(21, 'test3', 'test3', 'test3@gmail.com', 'test3', 'd18a4ce47e0f5fa8d7a75ec8bc2cf8c9', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-10 00:00:00', NULL, NULL, NULL);
+(21, 'test3', 'test3', 'test3@gmail.com', 'test3', 'd18a4ce47e0f5fa8d7a75ec8bc2cf8c9', 0x75736572732f55706c6f6164732f36303961333465333062343263336434663563613838396336626666343231622e6a7067, '2021-03-10 00:00:00', NULL, NULL, NULL),
+(29, 'test5', 'test5', 'test5@gmail.com', 'test5', 'cc03e747a6afbbcbf8be7668acfebee5', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-02 00:00:00', NULL, NULL, NULL),
+(30, 'test5', 'test5', 'test5@gmail.com', 'test5', 'cc03e747a6afbbcbf8be7668acfebee5', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-02 00:00:00', '', 'test5', 'test'),
+(31, 'test', 'test', 'test@gmail.com', 'test', 'cc03e747a6afbbcbf8be7668acfebee5', 0x75736572732f55706c6f6164732f6861636b65722e6a7067, '2021-03-01 00:00:00', '', 'test', 'test3');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `photos`
@@ -110,10 +142,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `takipci`
@@ -125,7 +163,7 @@ ALTER TABLE `takipci`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

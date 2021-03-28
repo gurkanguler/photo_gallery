@@ -4,7 +4,8 @@
 	ob_start();
 
 	if(isset($_SESSION["username"])){
-		$id= $_GET["id"];
+
+	$id = $_GET["id"];
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ana Sayfa - Fotoğraf Galerisi</title>
+	<title>Mesajlar - Fotoğraf Galerisi</title>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap" rel="stylesheet">
@@ -23,7 +24,6 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
-	
 	<!-- navbar -->
 		<nav class="index-navbar bg-white">
 			
@@ -38,7 +38,7 @@
 			<!-- menus -->
 				<nav class="menus">
 					<ul>
-						<li><?php echo("<a href='profil_index.php?id=".$_GET["id"]."' title='Ana Sayfa' class='active-menu'>");?>Ana Sayfa&nbsp;<i class="fas fa-home"></i></a></li>
+						<li><?php echo("<a href='profil_index.php?id=".$_GET["id"]."' title='Ana Sayfa'>");?>Ana Sayfa&nbsp;<i class="fas fa-home"></i></a></li>
 						<li><?php echo("<a href='about.php?id=".$_GET["id"]."' title='Hakkımızda'>");?>Hakkımızda&nbsp;<i class="fas fa-user"></i></a></li>
 						<li><a href="#" class="sekme-link" title="Keşfet">Keşfet&nbsp;<i class="fas fa-compass"></i></a></li>
 						<li><a href="contact.php" title="İletişim">İletişim&nbsp;<i class="fas fa-inbox"></i></a></li>
@@ -87,6 +87,8 @@
 					<?php 
 
 						if(isset($_POST["photo-upload-btn"])){
+
+							$user_id = $_GET["id"];
 
 							include 'db/db.php';
 
@@ -151,114 +153,100 @@
 		</nav>
 	<!-- navbar -->
 
-	<!-- container-fluid -->
+	<!-- container -->
 		<div class="container-fluid" id="user-content">
 			
 			<!-- row -->
-				<div class="row">
+				<div class="row justify-content-center">
 					
 					<!-- col -->
-						<div class="col-sm-3">
+						<div class="col-sm-5 text-center">
 							
-							<!-- en-cok-takipcili -->
-								<div class="en-cok-takipcili">
+							<!-- card -->
+								<div class="card">
 									
-									<!-- card -->
-										<div class="card">
+									<!-- header -->
+										<div class="card-header bg-danger text-white" style="font-weight: bold; user-select: none;">Mesajlar</div>
+									<!-- header -->
+
+									<!-- body -->
+										<div class="card-body">
 											
-											<!-- header -->
-												<header class="card-header bg-dark text-white text-center" style="user-select: none;">En Çok Takipçisi Olanlar</header>
-											<!-- header -->
-
-											<!-- body -->
-												<div class="card-body">
-													<ol>
-												
-													</ol>
-												</div>
-											<!-- body -->
-
-										</div>
-									<!-- card -->
-
-								</div>
-							<!-- en-cok-takipcili -->
-
-						</div>
-					<!-- col -->
-					
-					<!-- col -->
-						<div class="col-sm-6" id="posts">
-
-							<div class="card">
-								<?php 
-									include 'db/db.php';
-									$get_posts = $db->query("SELECT DISTINCT id,username, photos,date ,begeni_sayisi FROM photos");
-									while($post_result = $get_posts->fetch()){
-										echo("
-												<div class='card-body'>
-													<p><b>".$post_result["username"]." </b>tarafından <b>".$post_result["date"]." tarihinde</b> yüklendi.</p>
-													<img src='".$post_result["photos"]."'>
+											<!-- form -->
+												<form method="post">
+													
+													<!-- form-group -->
+														<div class="form-group">
+															<label for="alici">Alıcının Kullanıcı Adı: </label>
+															<br>
+															<br>
+															<input type="text" name="alici_username" autocomplete="off" required class="form-control">
+														</div>
+													<!-- form-group -->
 													<br>
 													<br>
-													<a href='photo_like.php?id=".$post_result["id"]."' class='like-btn'><i class='fas fa-heart'></i></a>&nbsp;".$post_result["begeni_sayisi"]."
-												</div>
-												<hr>
-											");
-									}
-								?>
-							</div>
+													<!-- form-group -->
+														<div class="form-group">
+															<label for="mesaj">Mesajınız: </label>
+															<textarea name="mesaj" id="" cols="30" rows="10" class="form-control"></textarea>
+														</div>
+													<!-- form-group -->
 
-						</div>
-					<!-- col -->
-					
-					<!-- col -->
-						<div class="col-sm-3">
-							
-							<!-- taniyor-olabilecegin -->
-								<div class="taniyor-olabilecegin">
+													<br>
+
+													<!-- form-group -->
+														<div class="form-group">
+															<button type="submit" name="send_message_btn" class="btn btn-success">Gönder</button>
+														</div>
+													<!-- form-group -->
+
+
+												</form>
+											<!-- form -->
+
+											<?php 
+												if(isset($_POST["send_message_btn"])){
+
+													include 'db/db.php';
+
+													$alici_username = $_POST["alici_username"];
+
+													$mesaj = $_POST["mesaj"];
+
+													$user_name = $_SESSION["username"];
+
+													$check_alici = $db->query("SELECT * FROM messages WHERE alan='".$alici_username."'");
+
+													if($check_alici_result = $check_alici->rowCount()){
+														if($check_alici_result > 0){
+
+															date_default_timezone_set("Europe/Istanbul");
+
+															$date = date("Y-m-d H:i:s");
+
+															$send_message = $db->query("INSERT INTO messages(gonderen,mesaj,alan,tarih) VALUES('".$user_name."','".$mesaj."','".$alici_username."','".$date."')");
+
+															if($send_message){
 									
-									<!-- card -->
-										<div class="card">
-											
-											<!-- header -->
-												<div class="card-header bg-dark text-white font-weight-bold text-center">Tanıyor Olabileceğin</div>
-											<!-- header -->
+																echo("<script>swal('Mesaj Gönderildi','Lütfen Bekleyiniz.','success')</script>");
+																header("Refresh:1; url=messages.php?id=".$user_id."");
+															}
 
-											<!-- body -->
-												<div class="card-body" style="user-select: none;">
-													<ul>
-													<?php 
-														$user_name2 = $_SESSION["username"];
-														$get_users = $db->query("SELECT DISTINCT username, profil_photo FROM users WHERE username!='".$user_name2."'");
-
-														while($get_users_results = $get_users->fetch()){
-															echo("
-																	<li>
-																	<img src='".$get_users_results["profil_photo"]."'>
-																	<br>
-																	<br>
-																	<p>
-																	".$get_users_results["username"]."</p>
-
-																	<a href='takip_et.php?username=".$get_users_results["username"]."'>Takip Et</a><br>
-																	<br>
-																	</li>
-																");
 														}
+													}
 
+													else{
 
-													?>
-
-													</ul>
-												</div>
-											<!-- body -->
+														echo("<script>swal('Hata','Kullanıcı Adı Bulunamadı.','error')</script>");
+													}
+												}
+											?>
 
 										</div>
-									<!-- card -->
+									<!-- body -->
 
 								</div>
-							<!-- taniyor-olabilecegin -->
+							<!-- card -->
 
 						</div>
 					<!-- col -->
@@ -267,13 +255,12 @@
 			<!-- row -->
 
 		</div>
-	<!-- container-fluid -->
+	<!-- container -->
 
 	<script src="js/index.js"></script>
-
+	
 </body>
 </html>
-
 <?php 
 	
 	}
