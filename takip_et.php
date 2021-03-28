@@ -10,7 +10,7 @@
 
 		$user_get = $_GET["username"];
 
-		echo $user_get;
+		
 
 		$username = $_SESSION["username"];
 

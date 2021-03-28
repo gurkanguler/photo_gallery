@@ -88,10 +88,31 @@
 							$photo = $path.basename($_FILES["photo"]["name"]);
 
 							$photo_type = $_FILES["photo"]["type"];
+
+							include 'db/db.php';
 							
-							if(strlen($password) <= 8 || strlen($password) >= 16){
+							if(strlen($password) < 8 || strlen($password) > 16){
 
 								echo("<script>swal('Hata','Parolanız 8 karakterden uzun, 16 karakterden az olmalıdır.','error')</script>");
+							}
+
+							$username_check = $db->query("SELECT username FROM users WHERE username='".$username."'");
+
+							if($username_check_result = $username_check->rowCount()){
+
+								if($username_check_result > 0){
+									
+									echo("<script>swal('Hata','Kullanıcı Adı Zaten Kullanılıyor.','error')</script>");
+
+									
+								}
+
+							}
+							$email_check = $db->query("SELECT email FROM users WHERE username='".$username."'");
+							if($email_check_result = $email_check->rowCount()){
+								if($email_check_result > 0){
+									echo("<script>swal('Hata','Email Zaten Kullanılıyor.','error')</script>");
+								}
 							}
 
 							else{
@@ -100,7 +121,7 @@
 
 									if(move_uploaded_file($_FILES["photo"]["tmp_name"], $photo)){
 
-										include 'db/db.php';
+										
 
 										$add = $db->query("INSERT INTO users(name,surname,email,username,password,profil_photo,birthday) VALUES('".$name."','".$surname."','".$email."','".$username."','".md5($password)."','".$photo."','".$birthday."')");
 

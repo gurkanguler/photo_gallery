@@ -283,3 +283,20 @@
 .like-btn:hover{
 	color: darkred;
 }
+
+.settings_menu_btns{
+	border: 0;
+	background: transparent;
+	outline: none;
+	transition: .4s ease;
+}
+.settings_menu_btns:hover{
+	color: #bf0000;
+}
+
+.settings_menu_btns_active{
+	color: #bf0000;
+}
+.profil-ayarlari-content{
+	display: none;
+}
